@@ -41,17 +41,55 @@ type CreateTransitionOptions = {
 };
 
 export interface Transitions {
-  createTransition: (options?: CreateTransitionOptions) => string;
+  createTransition: {
+    (options?: CreateTransitionOptions): string;
+    (options?: CreateTransitionOptions[]): string;
+  };
   durations: Durations;
   easings: Easings;
 }
 
 export const transitions: Transitions = {
-  createTransition: ({ property = 'all', duration = 'standard', easing = 'easeInOut' } = {}) => {
-    const selectedDuration = durations[duration] || durations.standard;
-    const selectedEasing = easings[easing] || easings.easeInOut;
-    return `${property} ${selectedDuration}ms ${selectedEasing}`;
+  createTransition: (options: CreateTransitionOptions | CreateTransitionOptions[] = {}) => {
+    const handleSingleOption = (opts: CreateTransitionOptions): string => {
+      const { property = 'all', duration = 'standard', easing = 'easeInOut' } = opts;
+      const selectedDuration = durations[duration] || durations.standard;
+      const selectedEasing = easings[easing] || easings.easeInOut;
+      return `${property} ${selectedDuration}ms ${selectedEasing}`;
+    };
+
+    if (Array.isArray(options)) {
+      return options.map(handleSingleOption).join(', ');
+    } else {
+      return handleSingleOption(options);
+    }
   },
   durations,
   easings,
 };
+
+// Example usage:
+const singleOption: CreateTransitionOptions = {
+  property: 'opacity',
+  duration: 'shorter',
+  easing: 'easeInOut',
+};
+
+const multipleOptions: CreateTransitionOptions[] = [
+  {
+    property: 'opacity',
+    duration: 'short',
+    easing: 'easeInOut',
+  },
+  {
+    property: 'transform',
+    duration: 'medium',
+    easing: 'easeOut',
+  },
+];
+
+const singleTransition = transitions.createTransition(singleOption);
+console.log(singleTransition);
+
+const multipleTransitions = transitions.createTransition(multipleOptions);
+console.log(multipleTransitions);

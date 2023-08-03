@@ -11,7 +11,7 @@ export interface PageWrapperProps extends BoxProps {
 
 export const pageWrapperProps: PageWrapperProps = {
   margin: '0 auto',
-  padding: `0 ${spaces.sm}`,
+  padding: `0 ${spaces.lg}`,
   paddingTop: heights.header.expanded,
   paddingBottom: spaces.sm,
   maxWidth: breakpoints.values.xl + breakpoints.unit,

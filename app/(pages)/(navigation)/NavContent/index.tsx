@@ -1,5 +1,11 @@
 import { Box, styled } from '@mui/material';
 import React from 'react'
+import Display from './Display';
+import Megamenu from './Megamenu';
+import Contact from './Contact';
+import Settigs from './Settings';
+import Copyright from './Copyright';
+import Legal from './Legal';
 
 const NavigationContent = styled(Box)(({ theme }) => ({
   ...theme.PageWrapperProps as any,
@@ -10,17 +16,23 @@ const NavigationContent = styled(Box)(({ theme }) => ({
   maxWidth: theme.breakpoints.values.xl,
   margin: '0 auto',
   display: 'grid',
-  gridTemplateColumns: 'repeat(12, 1fr)',
-  gridTemplateRows: 'repeat(12, 1fr)',
+  gridTemplateColumns: 'repeat(24, 1fr)',
+  gridTemplateRows: 'repeat(24, 1fr)',
   alignItems: 'center',
   alignContent: 'center',
-  backgroundColor: theme.palette.success.main,
 }));
+
+
 
 const NavContetnt = () => {
   return (
     <NavigationContent>
-      <div>NavContent</div>
+      <Display />
+      <Megamenu />
+      <Contact />
+      <Settigs />
+      <Copyright />
+      <Legal />
     </NavigationContent>
   )
 };

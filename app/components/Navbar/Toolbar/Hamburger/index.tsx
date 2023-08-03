@@ -7,6 +7,12 @@ import { useNavMenuContext } from '../../NavmenuProvider';
 
 const HamburgerWrapper = styled(Box)(({ theme }) => ({
   margin: '0',
+
+  '& path': {
+    transition: "all 0.1s ease-in-out",
+    strokeLinecap: 'round',
+    strokeWidth: '0.33rem',
+  }
 }));
 
 interface HamburgerIconProps extends React.SVGProps<SVGSVGElement> {
@@ -21,8 +27,6 @@ const HamburgerIcon = styled(Icon)<HamburgerIconProps>(({ theme, open, hoverover
 
     '& path': {
       stroke: theme.palette.secondary.main,
-      strokeWidth: '0.33rem',
-      transition: "all 0.1s ease-in-out",
     },
 
     '& .hamburger_svg__middle-bar': {
@@ -36,9 +40,7 @@ const HamburgerIcon = styled(Icon)<HamburgerIconProps>(({ theme, open, hoverover
     transform: 'scale(1.125)',
 
     '& path': {
-      stroke: hoverover === 'true' ? theme.palette.error.main : theme.palette.secondary.main,
-      strokeWidth: '0.35rem',
-      transition: "all 0.1s ease-in-out",
+      stroke: theme.palette.error.main,
     },
 
     '& .hamburger_svg__top-bar': {
