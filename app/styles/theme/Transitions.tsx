@@ -1,4 +1,4 @@
-interface Durations {
+export interface Durations {
   shortest: number;
   shorter: number;
   short: number;
@@ -9,7 +9,7 @@ interface Durations {
   longest: number;
 }
 
-const durations: Durations = {
+export const durations: Durations = {
   shortest: 150,
   shorter: 200,
   short: 250,
@@ -89,7 +89,5 @@ const multipleOptions: CreateTransitionOptions[] = [
 ];
 
 const singleTransition = transitions.createTransition(singleOption);
-console.log(singleTransition);
 
 const multipleTransitions = transitions.createTransition(multipleOptions);
-console.log(multipleTransitions);

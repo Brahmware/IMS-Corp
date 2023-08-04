@@ -1,118 +1,108 @@
-import { Box, styled } from '@mui/material';
+import { Box, Card, styled, useTheme } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
+import { useNavContext } from '../Megamenu/NavContext/NavContextProvider';
+import { IMSLogo } from '@/components/Logo';
+import navbar from '@/utils/constants/navbar';
 
-const DisplayWrapper = styled(Box)(({ theme }) => ({
+const DisplayWrapper = styled(Card)(({ theme }) => ({
   gridColumn: '1 / 6',
-  gridRow: '1 / 18',
+  gridRow: '1 / 20',
   borderRadius: '1rem',
-  backgroundColor: theme.palette.primary.main,
-  width: '100%', // Set the container width to 100%
-  height: '100%', // Set the container height to 100%
+  width: '100%',
+  aspectRatio: '1 / 1.75',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
+  boxShadow: 'unset',
+
+  [theme.breakpoints.up('lg')]: {
+    gridColumn: '1 / 6',
+  }
 }));
 
-const ListOfVideos: string[] = [
-  'https://www.indianmediasyndicate.com/images/megamenu-default-media.webm',
-  'https://www.indianmediasyndicate.com/images/sitemap/media-network/megamenu-media.webm',
-  'https://www.indianmediasyndicate.com/images/sitemap/education-and-teaching/megamenu-media.webm',
-];
+const DisplayVideo = styled('video')(({ theme }) => ({
+  width: '101%',
+  height: '101%',
+  objectFit: 'cover',
+  position: 'absolute',
+  top: '-1%',
+  left: '-1%',
+}));
+
+const Shutter = styled(Card)(({ theme }) => ({
+  width: '100%',
+  height: '100%',
+  backgroundColor: theme.palette.secondary.main,
+  transition: theme.Transitions.createTransition({
+    property: 'transform',
+    duration: 'medium',
+  }),
+  transform: 'translateY(98%)',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const IMSLogoStyled = styled(IMSLogo)(({ theme }) => ({
+  width: '50%',
+  height: '50%',
+}));
 
 const Display: React.FC = () => {
-  /* const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let currentVideoIndex = 0;
-  let videoElement: HTMLVideoElement | null = null;
+
+  const { videoUrl } = useNavContext().currentItem;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const shutterRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+
+  const onVideoLoaded = () => {
+    if (shutterRef.current) {
+      shutterRef.current.style.transform = 'translateY(98%)';
+    }
+  };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    if (videoRef.current) {
+      videoRef.current.addEventListener('loadeddata', onVideoLoaded);
 
-    const updateCanvas = () => {
-      if (!videoElement) {
-        // Create video element if it doesn't exist
-        videoElement = document.createElement('video');
-        videoElement.src = ListOfVideos[currentVideoIndex];
-        videoElement.loop = true;
-        videoElement.autoplay = true;
-        videoElement.addEventListener('play', () => {
-          drawVideoOnCanvas(videoElement!, canvas!, ctx!);
-        });
-      } else {
-        // Switch to the next video
-        currentVideoIndex = (currentVideoIndex + 1) % ListOfVideos.length;
-        videoElement.src = ListOfVideos[currentVideoIndex];
+      if (shutterRef.current) {
+        shutterRef.current.style.transform = 'translateY(0%)';
       }
-    };
+    }
 
-    const drawVideoOnCanvas = (
-      video: HTMLVideoElement,
-      canvas: HTMLCanvasElement,
-      ctx: CanvasRenderingContext2D
-    ) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const aspectRatio = video.videoWidth / video.videoHeight;
-      const parentWidth = canvas.parentElement?.clientWidth || 0;
-      const parentHeight = canvas.parentElement?.clientHeight || 0;
-
-      let canvasWidth = parentWidth;
-      let canvasHeight = parentWidth / aspectRatio;
-
-      if (canvasHeight > parentHeight) {
-        canvasHeight = parentHeight;
-        canvasWidth = parentHeight * aspectRatio;
-      }
-
-      const x = (parentWidth - canvasWidth) / 2;
-      const y = (parentHeight - canvasHeight) / 2;
-
-      ctx.drawImage(video, x, y, canvasWidth, canvasHeight);
-
-      requestAnimationFrame(() => drawVideoOnCanvas(video, canvas, ctx));
-    };
-
-    // Start updating canvas
-    const intervalId = setInterval(updateCanvas, 3000);
-
-    // Clean up the interval and video element when the component is unmounted
     return () => {
-      clearInterval(intervalId);
-      if (videoElement) {
-        videoElement.pause();
-        videoElement.removeEventListener('play', () => {});
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('loadeddata', onVideoLoaded);
       }
     };
-  }, []);
+  }, [videoUrl]);
 
-  // Dynamically adjust the canvas size to match the parent's size
+  const [delayedVideoUrl, setDelayedVideoUrl] = React.useState(navbar.defaultMedia.videoUrl);
+
   useEffect(() => {
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      const parent = canvas?.parentElement;
-      if (canvas && parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-      }
-    };
-
-    handleResize(); // Initial sizing
-
-    window.addEventListener('resize', handleResize);
+    const timeout = setTimeout(() => setDelayedVideoUrl(videoUrl), theme.Transitions.durations.medium);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeout);
     };
-  }, []); */
+  }, [videoUrl]);
 
   return (
-    <DisplayWrapper>
-      {/* <canvas ref={canvasRef} id='display'>
-        Your browser does not support the canvas element.
-      </canvas> */}
+    <DisplayWrapper elevation={navbar.elevationLow}>
+      <DisplayVideo
+        src={delayedVideoUrl}
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+      />
+      <Shutter elevation={navbar.elevationHigh} ref={shutterRef}>
+        <IMSLogoStyled />
+      </Shutter>
     </DisplayWrapper>
   );
 };

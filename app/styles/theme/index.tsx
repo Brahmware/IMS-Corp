@@ -4,7 +4,7 @@ import customTypography, { CustomTypographyOptions } from './Typography';
 import  { CustomPaletteOptions, customPaletteLight, customPaletteDark } from './Palette';
 import { Spaces, spaces } from './Spaces';
 import { Heights, heights } from './Heights';
-import { Transitions, transitions } from './Transitions';
+import { Durations, Transitions, durations, transitions } from './Transitions';
 import { PageWrapperProps, pageWrapperProps } from './PagewrapperProps';
 import { Breakpoints, breakpoints } from './Breakpoints';
 
@@ -18,6 +18,7 @@ declare module '@mui/material/styles' {
     Transitions: Transitions;
     PageWrapperProps: PageWrapperProps;
     Breakpoints: Breakpoints;
+    TimeDurations: Durations;
   }
 
 
@@ -29,6 +30,7 @@ declare module '@mui/material/styles' {
     Transitions?: Transitions;
     PageWrapperProps?: PageWrapperProps;
     Breakpoints?: Breakpoints;
+    TimeDurations?: Durations;
   }
 }
 
@@ -38,7 +40,8 @@ const commonThemeOptions: ThemeOptions = {
   Heights: heights,
   Transitions: transitions,
   PageWrapperProps: pageWrapperProps,
-  Breakpoints: breakpoints
+  Breakpoints: breakpoints,
+  TimeDurations: durations,
 };
 
 export const themeLight = createTheme({

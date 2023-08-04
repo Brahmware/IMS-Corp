@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box, Snackbar, Typography, styled } from '@mui/material';
 import contact from '@constants/contact';
 import SocialsSection from './SocialsSection';
+import { useNavContext } from '../Megamenu/NavContext/NavContextProvider';
+import navbar from '@/utils/constants/navbar';
 
 const ContactWrapper = styled(Box)(({ theme }) => ({
   gridColumn: '1 / 6',
@@ -30,6 +32,7 @@ const ContactWrapper = styled(Box)(({ theme }) => ({
 const EmailString = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   cursor: 'pointer',
+  transition: theme.Transitions.createTransition({ property: 'color' }),
 }));
 
 const StyledSnackbar = styled(Snackbar)(({ theme }) => ({
@@ -77,12 +80,15 @@ const Contact = () => {
     };
   };
 
+  const {setCurrentItem} = useNavContext();
+
   return (
     <React.Fragment>
-      <ContactWrapper>
-        <Typography variant='h4' component='h4'>
-          Contact Us
-        </Typography>
+      <ContactWrapper
+        onMouseEnter={() => setCurrentItem(navbar.contactusMedia)}
+        onMouseLeave={() => setCurrentItem(navbar.defaultMedia)}
+      >
+        <Typography variant='h4' component='h4'>CONTACT US</Typography>
         <EmailString onClick={handleCopyToClipboard}>
           namaste@indianmediasyndicate.com
         </EmailString>

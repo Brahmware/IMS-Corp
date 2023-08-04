@@ -25,15 +25,25 @@ const LegalWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
+const MenuItemLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  textUnderlineOffset: '0.1rem',
+  transition: theme.Transitions.createTransition({ property: 'color' }),
+
+  '&:hover': {
+    color: theme.palette.text.primary,
+  }
+}));
+
 const Legal = () => {
   return (
     <LegalWrapper>
-      <Link href="/visitor-agreement">
+      <MenuItemLink href="/visitor-agreement">
         Visitor Agreement
-      </Link>
-      <Link href="/privacy-notice">
+      </MenuItemLink>
+      <MenuItemLink href="/privacy-notice">
         Privacy Notice
-      </Link>
+      </MenuItemLink>
     </LegalWrapper>
   )
 }

@@ -5,6 +5,7 @@ import React from 'react'
 import { IMSLogoFull } from '@components/Logo';
 import Toolbar from '@components/Navbar/Toolbar';
 import { useNavMenuContext } from './NavmenuProvider';
+import navbar from '@/utils/constants/navbar';
 
 const Bar = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -61,7 +62,7 @@ const Navbar = () => {
 
   return (
     <Bar
-      elevation={4}
+      elevation={navbar.elevationHigh}
       className={useNavMenuContext().open ? 'menu-open' : ''}
     >
       <BarContent className='bar-content'>

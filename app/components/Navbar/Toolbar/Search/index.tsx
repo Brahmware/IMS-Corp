@@ -1,4 +1,4 @@
-import { SearchIcon as Icon} from '@/components/Icons';
+import { SearchIcon as Icon } from '@/components/Icons';
 import { Box, Button, styled } from '@mui/material'
 import React from 'react'
 
@@ -14,14 +14,24 @@ const SearchInput = styled('input')(({ theme }) => ({
   borderRadius: '1rem',
   border: 'none',
   outline: 'none',
-
   backgroundColor: theme.palette.secondary.light,
-  color: theme.palette.secondary.main,
+
+  color: (
+    theme.palette.mode === 'dark' ?
+      theme.palette.secondary.contrastText :
+      theme.palette.secondary.main
+  ),
+
   fontSize: '0.85rem',
   lineHeight: '1em',
   fontWeight: theme.typography.fontWeightRegular,
   letterSpacing: '0.025rem',
-  width: '15rem',
+  width: '20rem',
+  transition: theme.Transitions.createTransition({ property: 'width' }),
+
+  '&:focus': {
+    width: '33rem',
+  },
 }));
 
 const IconButton = styled(Button)(({ theme }) => ({
@@ -42,7 +52,7 @@ const IconButton = styled(Button)(({ theme }) => ({
 const SearchIcon = styled(Icon)(({ theme }) => ({
   width: '1rem',
   height: '1rem',
-  
+
   '& path': {
     strokeWidth: '0.175rem',
     stroke: theme.palette.primary.contrastText,
@@ -58,7 +68,7 @@ const Search = () => {
   return (
     <SearchWrapper>
       <SearchInput type="text" placeholder="Search in IMS" />
-      <IconButton 
+      <IconButton
         disableElevation
         variant='contained'
         aria-label="search"

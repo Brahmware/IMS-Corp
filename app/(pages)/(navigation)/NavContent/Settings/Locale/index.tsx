@@ -2,13 +2,15 @@ import { Button, Typography, styled } from '@mui/material';
 import { TranslationIcon as IconTrans } from '@/components/Icons';
 import React from 'react'
 import TranslationMenu from './TranslationMenu';
+import { useNavContext } from '../../Megamenu/NavContext/NavContextProvider';
+import navbar from '@/utils/constants/navbar';
 
 const LocaleButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   fontSize: '1rem',
   fontWeight: theme.typography.fontWeightRegular,
   borderRadius: '2rem',
-  padding: `${theme.Spaces.xxs} ${theme.Spaces.sm}`,
+  padding: `${theme.Spaces.xxs} ${theme.Spaces.lg} ${theme.Spaces.xxs} ${theme.Spaces.md}`,
   marginLeft: theme.Spaces.sm,
 
   '&:hover': {
@@ -28,12 +30,13 @@ const LocaleButton = styled(Button)(({ theme }) => ({
 
 const TranslationIcon = styled(IconTrans)(({ theme }) => ({
   height: '100%',
-  marginRight: theme.Spaces.xs,
-  transform: 'scale(0.77)',
+  marginRight: theme.Spaces.sm,
+  transform: `scale(0.75) translateX(-${theme.Spaces.xxs})`,
 }));
 
 const ButtonText = styled(Typography)(({ theme }) => ({
   lineHeight: 1,
+  fontSize: '0.875rem',
   color: theme.palette.error.contrastText,
   cursor: 'pointer',
 }));
@@ -46,6 +49,8 @@ const Locale = () => {
     setLocaleMenuOpen(!localeMenuOpen);
   };
 
+  const { setCurrentItem } = useNavContext();
+
   return (
     <React.Fragment>
       <LocaleButton
@@ -53,9 +58,11 @@ const Locale = () => {
         variant="contained"
         color="error"
         onClick={handleLocaleButtonOnClick}
+        onMouseEnter={() => setCurrentItem(navbar.translateMedia)}
+        onMouseLeave={() => setCurrentItem(navbar.defaultMedia)}
       >
         <TranslationIcon />
-        <ButtonText variant="body1">
+        <ButtonText>
           Eng IN
         </ButtonText>
       </LocaleButton>
