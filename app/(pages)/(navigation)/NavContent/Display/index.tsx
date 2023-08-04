@@ -1,4 +1,4 @@
-import { Box, Card, styled, useTheme } from '@mui/material';
+import { Card, styled, useTheme } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import { useNavContext } from '../Megamenu/NavContext/NavContextProvider';
 import { IMSLogo } from '@/components/Logo';
@@ -8,7 +8,8 @@ const DisplayWrapper = styled(Card)(({ theme }) => ({
   gridColumn: '1 / 6',
   gridRow: '1 / 20',
   borderRadius: '1rem',
-  width: '100%',
+  height: '100%',
+  maxHeight: '36rem',
   aspectRatio: '1 / 1.75',
   display: 'flex',
   alignItems: 'center',

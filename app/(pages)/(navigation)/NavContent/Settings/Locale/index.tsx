@@ -31,7 +31,7 @@ const LocaleButton = styled(Button)(({ theme }) => ({
 const TranslationIcon = styled(IconTrans)(({ theme }) => ({
   height: '100%',
   marginRight: theme.Spaces.sm,
-  transform: `scale(0.75) translateX(-${theme.Spaces.xxs})`,
+  transform: `scale(0.75)`,
 }));
 
 const ButtonText = styled(Typography)(({ theme }) => ({
