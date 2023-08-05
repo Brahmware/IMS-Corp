@@ -1,7 +1,13 @@
-version: '3.8'
-
+version: '3.9'
 services:
   app:
-    build: .
+    image: node:14-alpine
+    container_name: ims_corp_development
+    working_dir: /app
+    command: sh -c "yarn install && yarn build && yarn start"
+    volumes:
+      - .:/app
     ports:
-      - '3000:3000'
+      - "31415:3000"
+    environment:
+      - NODE_ENV=production
