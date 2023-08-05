@@ -12,3 +12,9 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    networks:
+      - ims_network
+
+networks:
+  ims_network:
+    driver: bridge
