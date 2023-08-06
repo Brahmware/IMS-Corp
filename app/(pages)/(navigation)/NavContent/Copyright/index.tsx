@@ -11,15 +11,23 @@ const CopyrightWrapper = styled(Box)(({ theme }) => ({
   justifyContent: 'start',
 }));
 
+const CopyRightText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontSize: theme.typography.fontSize * 1.2,
+  fontWeight: theme.typography.fontWeightBold,
+  margin: 0,
+  whiteSpace: 'nowrap',
+}));
+
 const Copyright = () => {
 
   const thisYear = new Date().getFullYear();
 
   return (
     <CopyrightWrapper>
-      <Typography variant="h6" component="h3">
+      <CopyRightText as="h3">
         © {thisYear} Indian Media Syndicate. All rights reserved.
-      </Typography>
+      </CopyRightText>
     </CopyrightWrapper>
   )
 }

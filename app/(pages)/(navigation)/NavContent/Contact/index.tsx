@@ -29,10 +29,18 @@ const ContactWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
+const ContactTitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontSize: theme.typography.fontSize * 1.5,
+  fontWeight: theme.typography.fontWeightBold,
+  whiteSpace: 'nowrap',
+}));
+
 const EmailString = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   cursor: 'pointer',
   transition: theme.Transitions.createTransition({ property: 'color' }),
+  whiteSpace: 'nowrap',
 }));
 
 const StyledSnackbar = styled(Snackbar)(({ theme }) => ({
@@ -88,7 +96,7 @@ const Contact = () => {
         onMouseEnter={() => setCurrentItem(navbar.contactusMedia)}
         onMouseLeave={() => setCurrentItem(navbar.defaultMedia)}
       >
-        <Typography variant='h4' component='h4'>CONTACT US</Typography>
+        <ContactTitle as='h4'>CONTACT US</ContactTitle>
         <EmailString onClick={handleCopyToClipboard}>
           namaste@indianmediasyndicate.com
         </EmailString>

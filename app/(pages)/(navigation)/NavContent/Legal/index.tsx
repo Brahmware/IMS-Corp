@@ -28,6 +28,7 @@ const LegalWrapper = styled(Box)(({ theme }) => ({
 const MenuItemLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.secondary,
   textUnderlineOffset: '0.1rem',
+  whiteSpace: 'nowrap',
   transition: theme.Transitions.createTransition({ property: 'color' }),
 
   '&:hover': {

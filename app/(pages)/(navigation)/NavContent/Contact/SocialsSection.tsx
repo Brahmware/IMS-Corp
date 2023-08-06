@@ -14,6 +14,7 @@ const Separator = styled(Divider)(({ theme }) => ({
 
 const Title = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
+  whiteSpace: 'nowrap',
 }));
 
 const socialsLinks = {
