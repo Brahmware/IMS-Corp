@@ -11,17 +11,17 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: ./.github/workflows/steps/checkout_code.yml
+        uses: ./.github/actions/checkout_code
 
       - name: SSH and Deploy
-        uses: ./.github/workflows/steps/ssh_and_deploy.yml
+        uses: ./.github/actions/ssh_and_deploy
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Send Notification
-        uses: ./.github/workflows/steps/send_notification.yml
+        uses: ./.github/actions/send_notification
         with:
           server_address: mail.brahmware.com
           server_port: 465
