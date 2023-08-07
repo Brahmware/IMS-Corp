@@ -13,6 +13,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S')"
+
       - name: SSH and deploy
         uses: appleboy/ssh-action@master
         with:
@@ -33,6 +37,15 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployed"
-          body: "IMS-Corp has been deployed successfully"
+          body: >
+            IMS-Corp has been deployed successfully on branch ${{ github.ref }}.
+            Commit: ${{ github.sha }}
+            Deployed by: ${{ github.actor }}
+            Time: ${{ steps.date.outputs.date }}
+            Repository URL: ${{ github.event.repository.html_url }}
+            Workflow: ${{ github.workflow }}
+            Event Name: ${{ github.event_name }}
+            Runner OS: ${{ runner.os }}
+            Previous Commit: ${{ github.event.before }}
           to: "bhunia.sanchayan@gmail.com"
           from: ${{ secrets.MAIL_SERVER_UID }}
