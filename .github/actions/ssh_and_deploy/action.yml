@@ -1,15 +1,15 @@
 name: 'SSH and Deploy'
-description: 'SSH into a server and deploy the application'
+description: 'SSH into a server and deploy the code'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
 inputs:
   host:
-    description: 'SSH Host'
+    description: 'Host to SSH into'
     required: true
   username:
-    description: 'SSH Username'
+    description: 'Username for SSH'
     required: true
   key:
-    description: 'SSH Private Key'
+    description: 'SSH private key'
     required: true
-runs:
-  using: 'node12'
-  main: 'index.js'
