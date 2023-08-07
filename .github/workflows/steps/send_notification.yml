@@ -1,0 +1,10 @@
+uses: dawidd6/action-send-mail@v3
+with:
+  server_address: ${{ inputs.server_address }}
+  server_port: ${{ inputs.server_port }}
+  username: ${{ inputs.username }}
+  password: ${{ inputs.password }}
+  subject: "IMS-Corp Deployed"
+  body: "IMS-Corp has been deployed successfully"
+  to: ${{ inputs.to }}
+  from: ${{ inputs.from }}
