@@ -10,17 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: SSH and deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd ~/IMS-Corp
-          git pull origin dev
-          docker compose build
-          docker compose up -d
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/IMS-Corp
+            git pull origin dev
+            docker compose build
+            docker compose up -d
+      
+      - name: Send Notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.brahmware.com
+          server_port: 465
+          username: ${{ secrets.MAIL_SERVER_UID }}
+          password: ${{ secrets.MAIL_SERVER_PASS }}
+          subject: "IMS-Corp Deployed"
+          body: "IMS-Corp has been deployed successfully"
+          to: "bhunia.sanchayan@gmail.com"
+          from: ${{ secrets.MAIL_SERVER_UID }}
