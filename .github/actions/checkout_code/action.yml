@@ -1,5 +1,0 @@
-name: 'Checkout Code'
-description: 'Checks out the code from the repository'
-runs:
-  using: 'node12'
-  main: 'index.js'

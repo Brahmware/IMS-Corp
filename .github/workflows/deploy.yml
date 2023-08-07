@@ -14,14 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SSH and Deploy
-        uses: ./.github/actions/ssh_and_deploy/action.yml 
+        uses: ./.github/actions/ssh_and_deploy
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Send Notification
-        uses: ./.github/actions/send_notification/action.yml
+        uses: ./.github/actions/send_notification
         with:
           server_address: mail.brahmware.com
           server_port: 465

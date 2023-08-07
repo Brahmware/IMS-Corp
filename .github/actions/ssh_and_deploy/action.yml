@@ -1,14 +1,14 @@
 name: 'SSH and Deploy'
-description: 'Connects to a remote server via SSH and deploys the code'
+description: 'SSH into a server and deploy the application'
 inputs:
   host:
-    description: 'SSH host'
+    description: 'SSH Host'
     required: true
   username:
-    description: 'SSH username'
+    description: 'SSH Username'
     required: true
   key:
-    description: 'SSH private key'
+    description: 'SSH Private Key'
     required: true
 runs:
   using: 'node12'

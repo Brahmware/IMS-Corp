@@ -1,51 +1,26 @@
+const { execSync } = require('child_process');
 const core = require('@actions/core');
-const { Client } = require('ssh2');
 
-async function run() {
-  try {
-    const host = core.getInput('host');
-    const username = core.getInput('username');
-    const key = core.getInput('key');
+try {
+  const host = core.getInput('host');
+  const username = core.getInput('username');
+  const key = core.getInput('key');
 
-    const client = new Client();
+  // Writing the SSH key to a file
+  require('fs').writeFileSync('private_key.pem', key, { mode: '600' });
 
-    client.on('ready', function () {
-      console.log('SSH connection established');
+  // SSH and deploy commands
+  const deployCommands = [
+    'cd ~/IMS-Corp',
+    'git pull origin dev',
+    'docker compose build',
+    'docker compose up -d',
+  ];
 
-      const deployScript = `
-        cd ~/IMS-Corp
-        git pull origin dev
-        docker compose build
-        docker compose up -d
-      `;
+  // Running the commands
+  execSync(`ssh -i private_key.pem ${username}@${host} "${deployCommands.join(' && ')}"`);
 
-      client.exec(deployScript, function (err, stream) {
-        if (err) throw err;
-
-        stream.on('close', function (code, signal) {
-          console.log(`Stream closed with code: ${code}, signal: ${signal}`);
-          client.end();
-        });
-
-        stream.on('data', function (data) {
-          console.log(`STDOUT: ${data}`);
-        });
-
-        stream.stderr.on('data', function (data) {
-          console.error(`STDERR: ${data}`);
-        });
-      });
-    })
-    .connect({
-      host,
-      port: 22,
-      username,
-      privateKey: key
-    });
-
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+  console.log('Deployment successful.');
+} catch (error) {
+  core.setFailed(`Deployment failed with error: ${error}`);
 }
-
-run();
