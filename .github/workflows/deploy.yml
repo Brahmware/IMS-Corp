@@ -14,18 +14,25 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SSH and Deploy
-        uses: ./.github/actions/ssh_and_deploy
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/IMS-Corp
+            git pull origin dev
+            docker-compose build
+            docker-compose up -d
 
-      - name: Send Notification
-        uses: ./.github/actions/send_notification
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v3
         with:
-          server_address: mail.brahmware.com
-          server_port: 465
-          username: ${{ secrets.MAIL_SERVER_UID }}
+          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
+          server_port: ${{ secrets.MAIL_SERVER_PORT }}
+          username: ${{ secrets.MAIL_SERVER_UID}}
           password: ${{ secrets.MAIL_SERVER_PASS }}
-          to: "bhunia.sanchayan@gmail.com"
+          subject: Deployment Notification
+          to: bhunia.sanchayan@gmail.com
           from: ${{ secrets.MAIL_SERVER_UID }}
+          body: Deployment was successful
