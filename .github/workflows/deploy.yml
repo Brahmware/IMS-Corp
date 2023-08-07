@@ -11,17 +11,17 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: ./.github/actions/checkout_code
+        uses: ./.github/actions/checkout_code # Path to your custom checkout_code action
 
       - name: SSH and Deploy
-        uses: ./.github/actions/ssh_and_deploy
+        uses: ./.github/actions/ssh_and_deploy # Path to your custom ssh_and_deploy action
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Send Notification
-        uses: ./.github/actions/send_notification
+        uses: ./.github/actions/send_notification # Path to your custom send_notification action
         with:
           server_address: mail.brahmware.com
           server_port: 465

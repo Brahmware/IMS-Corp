@@ -1,10 +1,30 @@
-uses: dawidd6/action-send-mail@v3
-with:
-  server_address: ${{ inputs.server_address }}
-  server_port: ${{ inputs.server_port }}
-  username: ${{ inputs.username }}
-  password: ${{ inputs.password }}
-  subject: "IMS-Corp Deployed"
-  body: "IMS-Corp has been deployed successfully"
-  to: ${{ inputs.to }}
-  from: ${{ inputs.from }}
+name: 'Send Notification'
+description: 'Send an email notification'
+inputs:
+  server_address:
+    description: 'SMTP server address'
+    required: true
+  server_port:
+    description: 'SMTP server port'
+    required: true
+  username:
+    description: 'SMTP server username'
+    required: true
+  password:
+    description: 'SMTP server password'
+    required: true
+  to:
+    description: 'Recipient email address'
+    required: true
+  from:
+    description: 'Sender email address'
+    required: true
+  subject:
+    description: 'Email subject'
+    required: true
+  body:
+    description: 'Email body'
+    required: true
+runs:
+  using: 'node16'
+  main: 'send_notification.js'
