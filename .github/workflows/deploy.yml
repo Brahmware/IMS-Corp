@@ -20,11 +20,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            cat 'The runner can come into the server' > ~/test.txt
             cd ~/IMS-Corp
             git pull origin dev
             docker compose build --no-cache
             docker compose up -d
-            
+
       - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
