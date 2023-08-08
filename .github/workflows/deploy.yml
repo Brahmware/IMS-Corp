@@ -29,10 +29,10 @@ jobs:
       - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.mail_server_address }}
-          server_port: ${{ secrets.mail_server_port }}
-          username: ${{ secrets.username }}
-          password: ${{ secrets.mail_server_pass }}
+          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
+          server_port: ${{ secrets.MAIL_SERVER_PORT }}
+          username: ${{ secrets.MAIL_SERVER_UID }}
+          password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployed"
           body: "IMS-Corp has been deployed successfully"
           to: "bhunia.sanchayan@gmail.com"
