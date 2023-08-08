@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Gather Information
-        id: gather_info
         run: |
           echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_ENV
           echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -33,21 +32,22 @@ jobs:
             docker compose build
             docker compose up -d
 
-      - name: Send Notification
+      - name: Create Email Body
         run: |
-          echo "Deployment Notification" > email_subject.txt
           echo "Deployment Details:" > email_body.txt
           echo "Branch: $BRANCH_NAME" >> email_body.txt
           echo "Commit Message: $COMMIT_MESSAGE" >> email_body.txt
           echo "Author: $COMMIT_AUTHOR" >> email_body.txt
           echo "Date: $COMMIT_DATE" >> email_body.txt
+
+      - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: mail.brahmware.com
-          server_port: 465
-          username: ${{ secrets.MAIL_SERVER_UID }}
-          password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: email_subject.txt
+          server_address: ${{ secrets.mail_server_address }}
+          server_port: ${{ secrets.mail_server_port }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.mail_server_pass }}
+          subject: "IMS-Corp Deployed"
+          body: "IMS-Corp has been deployed successfully"
           to: "bhunia.sanchayan@gmail.com"
-          from: ${{ secrets.MAIL_SERVER_UID }}
-          body: email_body.txt
+          from: ${{ secrets.username }}
