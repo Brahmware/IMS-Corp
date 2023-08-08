@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cat 'The runner can come into the server' > ~/test.txt
+            cat 'The runner can come into the server' > ~/ami_pouchechi.txt
             cd ~/IMS-Corp
             git pull origin dev
             docker compose build --no-cache
