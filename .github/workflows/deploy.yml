@@ -13,13 +13,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Gather Information
-        run: |
-          echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          echo "COMMIT_AUTHOR=$(git log --format='%an <%ae>' -n 1 ${{ github.sha }})" >> $GITHUB_ENV
-          echo "COMMIT_DATE=$(git log --format='%ad' --date=format:'%Y-%m-%d %H:%M:%S' -n 1 ${{ github.sha }})" >> $GITHUB_ENV
-
       - name: SSH and deploy
         uses: appleboy/ssh-action@master
         with:
@@ -31,15 +24,7 @@ jobs:
             git pull origin dev
             docker compose build --no-cache
             docker compose up -d
-
-      - name: Create Email Body
-        run: |
-          echo "Deployment Details:" > email_body.txt
-          echo "Branch: $BRANCH_NAME" >> email_body.txt
-          echo "Commit Message: $COMMIT_MESSAGE" >> email_body.txt
-          echo "Author: $COMMIT_AUTHOR" >> email_body.txt
-          echo "Date: $COMMIT_DATE" >> email_body.txt
-
+            
       - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
