@@ -13,7 +13,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: SSH and Deploy
+      - name: Gather Information
+        id: gather_info
+        run: |
+          echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          echo "COMMIT_AUTHOR=$(git log --format='%an <%ae>' -n 1 ${{ github.sha }})" >> $GITHUB_ENV
+          echo "COMMIT_DATE=$(git log --format='%ad' --date=format:'%Y-%m-%d %H:%M:%S' -n 1 ${{ github.sha }})" >> $GITHUB_ENV
+
+      - name: SSH and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -22,17 +30,24 @@ jobs:
           script: |
             cd ~/IMS-Corp
             git pull origin dev
-            docker-compose build
-            docker-compose up -d
+            docker compose build
+            docker compose up -d
 
-      - name: Send Email Notification
+      - name: Send Notification
+        run: |
+          echo "Deployment Notification" > email_subject.txt
+          echo "Deployment Details:" > email_body.txt
+          echo "Branch: $BRANCH_NAME" >> email_body.txt
+          echo "Commit Message: $COMMIT_MESSAGE" >> email_body.txt
+          echo "Author: $COMMIT_AUTHOR" >> email_body.txt
+          echo "Date: $COMMIT_DATE" >> email_body.txt
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
-          server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          username: ${{ secrets.MAIL_SERVER_UID}}
+          server_address: mail.brahmware.com
+          server_port: 465
+          username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: Deployment Notification
-          to: bhunia.sanchayan@gmail.com
+          subject: email_subject.txt
+          to: "bhunia.sanchayan@gmail.com"
           from: ${{ secrets.MAIL_SERVER_UID }}
-          body: Deployment was successful
+          body: email_body.txt
