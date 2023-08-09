@@ -36,13 +36,7 @@ jobs:
       - name: Read HTML file
         id: read_html
         run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
-          cd ~/IMS-Corp
-          content=$(cat /templates/email/notify_deployment-staging.html) # Replace this with the path to your HTML file
+          content=$(cat ./templates/email/notify_deployment-staging.html) # Replace this with the path to your HTML file
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
