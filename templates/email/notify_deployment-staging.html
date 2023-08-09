@@ -1,55 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deployment Notification</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      color: #333;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-    }
-
-    .header {
-      text-align: center;
-    }
-
-    .details {
-      margin: 20px 0;
-    }
-
-    .footer {
-      text-align: center;
-      color: #777;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Notification</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>IMS-Corp Deployed</h1>
-      <p>Deployment summary and details</p>
-    </div>
-    <div class="details">
-      <p><strong>Branch:</strong> dev</p>
-      <p><strong>Triggered by:</strong> [username]</p>
-      <p><strong>Time:</strong> [timestamp]</p>
-      <p><strong>Commit message:</strong> [commit message]</p>
-    </div>
-    <div class="footer">
-      <p>Thank you for using IMS-Corp!</p>
-    </div>
-  </div>
-</body>
+    <h1>IMS-Corp Deployment Notification</h1>
+    <p>The deployment was completed at: {{deployment_time}}</p>
+    <p>Commit message: {{commit_message}}</p>
+    <p>Author: {{author_name}} ({{author_email}})</p>
+    <h2>Files Changed:</h2>
+    <pre>{{files_changed}}</pre>
 
+    <h2>Summary Table:</h2>
+    <table>
+        <tr>
+            <th>Deployment Time</th>
+            <th>Commit Message</th>
+            <th>Author</th>
+            <th>Email</th>
+        </tr>
+        <tr>
+            <td>{{deployment_time}}</td>
+            <td>{{commit_message}}</td>
+            <td>{{author_name}}</td>
+            <td>{{author_email}}</td>
+        </tr>
+    </table>
+    <p>For more details, please check the GitHub repository.</p>
+</body>
 </html>

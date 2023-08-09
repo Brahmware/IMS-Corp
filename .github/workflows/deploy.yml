@@ -12,6 +12,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Prepare Email
+        id: prepare_email
+        run: |
+          deployment_time="$(date)"
+          commit_message="$(git log -1 --pretty=%B)"
+          author_name="$(git log -1 --pretty=%an)"
+          author_email="$(git log -1 --pretty=%ae)"
+          files_changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+          content=$(cat ./templates/notify_deployment-staging.html)
+          content=${content/'{{deployment_time}}'/$deployment_time}
+          content=${content/'{{commit_message}}'/$commit_message}
+          content=${content/'{{author_name}}'/$author_name}
+          content=${content/'{{author_email}}'/$author_email}
+          content=${content/'{{files_changed}}'/$files_changed}
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=content::$content"
+
       - name: SSH and Deploy
         run: |
           mkdir -p ~/.ssh/
@@ -25,16 +44,15 @@ jobs:
           docker compose up -d
           exit
           EOF
-        
+
       - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
           server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          secure: ${{ secrets.MAIL_SERVER_SECURE }}
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployed"
-          body: "IMS-Corp has been deployed successfully"
+          body: ${{ steps.prepare_email.outputs.content }}
           from: ${{ secrets.MAIL_SERVER_UID }}
           to: "bhunia.sanchayan@gmail.com"
