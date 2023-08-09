@@ -35,10 +35,10 @@ jobs:
           files_changed=$(git diff-tree --no-commit-id --name-only -r $last_commit_hash)
           template_path="./templates/email/notify_deployment-staging.html"
           content=$(cat $template_path)
-          content=${content//PLACEHOLDER_DEPLOYMENT_TIME/$deployment_time}
-          content=${content//PLACEHOLDER_AUTHOR_NAME/$author_name}
-          content=${content//PLACEHOLDER_AUTHOR_EMAIL/$author_email}
-          content=${content//PLACEHOLDER_FILES_CHANGED/$files_changed}
+          content=${content//DEPLOYMENT_TIME/$deployment_time}
+          content=${content//AUTHOR_NAME/$author_name}
+          content=${content//AUTHOR_EMAIL/$author_email}
+          content=${content//FILES_CHANGED/$files_changed}
           
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
