@@ -54,4 +54,16 @@ jobs:
           echo "$content" > ~/IMS-Corp/emails/notify_deployment-staging.html
           exit
           EOF
+
+      - name: Send Email
+        uses: Brahmware/Send-Notification@main
+        with:
+          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
+          server_port: ${{ secrets.MAIL_SERVER_PORT }}
+          username: ${{ secrets.MAIL_SERVER_UID }}
+          password: ${{ secrets.MAIL_SERVER_PASS }}
+          subject: "IMS-Corp Deployment on Staging"
+          body: "Deployment on Staging has been completed successfully."
+          from: ${{ secrets.MAIL_SERVER_UID }}
+          to: ${{ secrets.MAIL_SERVER_UID }}
         
