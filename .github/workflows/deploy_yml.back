@@ -1,0 +1,42 @@
+name: Deploy on Staging
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Deploy
+        id: deploy
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
+          cd ~/IMS-Corp
+          git pull origin dev
+          content=$(cat ./templates/notify_deployment-staging.html)
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=content::$content"
+          docker compose build --no-cache
+          docker compose up -d
+          exit
+          EOF
+
+      - name: Send Notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
+          server_port: ${{ secrets.MAIL_SERVER_PORT }}
+          username: ${{ secrets.MAIL_SERVER_UID }}
+          password: ${{ secrets.MAIL_SERVER_PASS }}
+          subject: "IMS-Corp Deployed"
+          body: ${{ steps.deploy.outputs.content }}
+          from: ${{ secrets.MAIL_SERVER_UID }}
+          to: "bhunia.sanchayan@gmail.com"

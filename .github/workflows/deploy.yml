@@ -21,8 +21,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
           cd ~/IMS-Corp
           git pull origin dev
-          //docker compose build
-          //docker compose up -d
           exit
           EOF
 
