@@ -41,9 +41,13 @@ jobs:
           content=${content//PLACEHOLDER_AUTHOR_NAME/$author_name}
           content=${content//PLACEHOLDER_AUTHOR_EMAIL/$author_email}
           content=${content//PLACEHOLDER_FILES_CHANGED/$files_changed}
-          echo "::set-output name=content::$content"
-
-      - name: Send Notification
-        run: |
-          echo ${{ steps.prepare_email.outputs.content }}
+          
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
+          echo "$content" > ~/IMS-Corp/emails/notify_deployment-staging.html
+          exit
+          EOF
         
