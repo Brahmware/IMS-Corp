@@ -2,39 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deployment Notification</title>
+    <title>IMS-Corp Deployment Notification</title>
     <style>
         body { font-family: Arial, sans-serif; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        .container { margin: 20px; }
+        .header { font-weight: bold; font-size: 20px; }
+        .section { margin: 10px 0; }
+        .summary-table { width: 100%; border-collapse: collapse; }
+        .summary-table th, .summary-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .summary-table tr:nth-child(even) { background-color: #f2f2f2; }
+        .summary-table th { padding-top: 12px; padding-bottom: 12px; background-color: #4CAF50; color: white; }
     </style>
 </head>
 <body>
-    <h1>IMS-Corp Deployment Notification</h1>
-    <p>The deployment was completed at: {{deployment_time}}</p>
-    <p>Commit message: {{commit_message}}</p>
-    <p>Author: {{author_name}} ({{author_email}})</p>
-    <h2>Files Changed:</h2>
-    <pre>{{files_changed}}</pre>
+    <div class="container">
+        <div class="header">IMS-Corp Deployment Notification</div>
+        <div class="section">Deployment Time: {DEPLOYMENT_TIME}</div>
+        <div class="section">Branch Deployed: {BRANCH_NAME}</div>
+        <div class="section">Commit Message: {COMMIT_MESSAGE}</div>
+        <div class="section">Author Name: {AUTHOR_NAME}</div>
+        <div class="section">Author Email: {AUTHOR_EMAIL}</div>
+        <div class="section">Files Changed:</div>
+        <pre class="section">{FILES_CHANGED}</pre>
 
-    <h2>Summary Table:</h2>
-    <table>
-        <tr>
-            <th>Deployment Time</th>
-            <th>Commit Message</th>
-            <th>Author</th>
-            <th>Email</th>
-        </tr>
-        <tr>
-            <td>{{deployment_time}}</td>
-            <td>{{commit_message}}</td>
-            <td>{{author_name}}</td>
-            <td>{{author_email}}</td>
-        </tr>
-    </table>
-    <p>For more details, please check the GitHub repository.</p>
+        <h2>Summary</h2>
+        <table class="summary-table">
+            <tr>
+                <th>Deployment Time</th>
+                <th>Branch</th>
+                <th>Author</th>
+                <th>Email</th>
+                <th>Commit Message</th>
+            </tr>
+            <tr>
+                <td>{DEPLOYMENT_TIME}</td>
+                <td>{BRANCH_NAME}</td>
+                <td>{AUTHOR_NAME}</td>
+                <td>{AUTHOR_EMAIL}</td>
+                <td>{COMMIT_MESSAGE}</td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
