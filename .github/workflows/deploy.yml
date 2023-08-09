@@ -30,17 +30,17 @@ jobs:
         id: prepare_email
         run: |
           deployment_time="$(date)"
-          branch_name="${GITHUB_REF##*/}"
-          commit_message="$(git log --format=%B -n 1 ${{ github.sha }})"
-          author_name="$(git log --format='%an' -n 1)"
-          author_email="$(git log --format='%ae' -n 1)"
-          files_changed="$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})"
-          content=$(sed -e "s/{DEPLOYMENT_TIME}/$deployment_time/g" \
-                       -e "s/{BRANCH_NAME}/$branch_name/g" \
-                       -e "s/{COMMIT_MESSAGE}/$commit_message/g" \
-                       -e "s/{AUTHOR_NAME}/$author_name/g" \
-                       -e "s/{AUTHOR_EMAIL}/$author_email/g" \
-                       -e "s/{FILES_CHANGED}/$files_changed/g" ./templates/email/notify_deployment-staging.html)
+          git fetch --unshallow
+          last_commit_hash=$(git rev-parse HEAD)
+          author_name=$(git log -1 --format='%an')
+          author_email=$(git log -1 --format='%ae')
+          files_changed=$(git diff-tree --no-commit-id --name-only -r $last_commit_hash)
+          template_path="./templates/email/notify_deployment-staging.html"
+          content=$(cat $template_path)
+          content=${content//PLACEHOLDER_DEPLOYMENT_TIME/$deployment_time}
+          content=${content//PLACEHOLDER_AUTHOR_NAME/$author_name}
+          content=${content//PLACEHOLDER_AUTHOR_EMAIL/$author_email}
+          content=${content//PLACEHOLDER_FILES_CHANGED/$files_changed}
           echo "::set-output name=content::$content"
 
       - name: Send Notification
