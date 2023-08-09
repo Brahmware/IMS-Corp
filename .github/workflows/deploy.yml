@@ -48,6 +48,7 @@ jobs:
           ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
           cd ~/IMS-Corp
+          ls -la
           echo "$content" > ~/IMS-Corp/emails/notify_deployment-staging.html
           exit
           EOF
