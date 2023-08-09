@@ -32,12 +32,16 @@ jobs:
           last_commit_hash=$(git rev-parse HEAD)
           author_name=$(git log -1 --format='%an')
           author_email=$(git log -1 --format='%ae')
+          branch_name=$(git rev-parse --abbrev-ref HEAD)
+          commit_message=$(git log -1 --pretty=%B)
           files_changed=$(git diff-tree --no-commit-id --name-only -r $last_commit_hash)
           template_path="./templates/email/notify_deployment-staging.html"
           content=$(cat $template_path)
           content=${content//DEPLOYMENT_TIME/$deployment_time}
           content=${content//AUTHOR_NAME/$author_name}
           content=${content//AUTHOR_EMAIL/$author_email}
+          content=${content//BRANCH_NAME/$branch_name}
+          content=${content//COMMIT_MESSAGE/$commit_message}
           content=${content//FILES_CHANGED/$files_changed}
           
           mkdir -p ~/.ssh/
