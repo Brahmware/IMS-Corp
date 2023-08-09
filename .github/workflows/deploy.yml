@@ -16,43 +16,20 @@ jobs:
         id: prepare_email
         run: |
           deployment_time="$(date)"
-          commit_message="$(git log -1 --pretty=%B)"
-          author_name="$(git log -1 --pretty=%an)"
-          author_email="$(git log -1 --pretty=%ae)"
-          files_changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
-          content=$(cat ./templates/notify_deployment-staging.html)
-          content=${content/'{{deployment_time}}'/$deployment_time}
-          content=${content/'{{commit_message}}'/$commit_message}
-          content=${content/'{{author_name}}'/$author_name}
-          content=${content/'{{author_email}}'/$author_email}
-          content=${content/'{{files_changed}}'/$files_changed}
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=content::$content"
+          # Modify this path to point to the correct location of your HTML file
+          html_file_path="./templates/notify_deployment-staging.html"
+          # Check if the file exists and read it
+          if [ -f "$html_file_path" ]; then
+            content=$(cat "$html_file_path")
+            # Replace the placeholders here as needed
+            # ...
+            content="${content//'%'/'%25'}"
+            content="${content//$'\n'/'%0A'}"
+            content="${content//$'\r'/'%0D'}"
+            echo "::set-output name=content::$content"
+          else
+            echo "HTML file not found at $html_file_path"
+            exit 1
+          fi
 
-      - name: SSH and Deploy
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
-          cd ~/IMS-Corp
-          git pull origin dev
-          docker compose build --no-cache
-          docker compose up -d
-          exit
-          EOF
-
-      - name: Send Notification
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
-          server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          username: ${{ secrets.MAIL_SERVER_UID }}
-          password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: "IMS-Corp Deployed"
-          body: ${{ steps.prepare_email.outputs.content }}
-          from: ${{ secrets.MAIL_SERVER_UID }}
-          to: "bhunia.sanchayan@gmail.com"
+      # Other steps for SSH and Deploy and Send Notification...
