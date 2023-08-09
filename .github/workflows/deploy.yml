@@ -36,7 +36,7 @@ jobs:
       - name: Read HTML file
         id: read_html
         run: |
-          cd ~/IMS-Corp
+          cd ./IMS-Corp
           content=$(cat /templates/email/notify_deployment-staging.html) # Replace this with the path to your HTML file
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
