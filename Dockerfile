@@ -1,23 +1,16 @@
-# Use the official Node.js image
-FROM node:alpine
+FROM node:14
 
-# Set the working directory
+# Copy everything from the current directory into the Docker image
+COPY . /app
+
+# Set working directory inside the container
 WORKDIR /app
-
-# Copy package.json and yarn.lock
-COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install
 
-# Copy the rest of the app
-COPY . .
-
-# Build the app
+# Compile TypeScript
 RUN yarn build
 
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Command to run the app
+# Start command as defined in package.json
 CMD ["yarn", "start"]
