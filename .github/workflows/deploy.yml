@@ -31,6 +31,7 @@ jobs:
         with:
           server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
           server_port: ${{ secrets.MAIL_SERVER_PORT }}
+          secure: ${{ secrets.MAIL_SERVER_SECURE }}
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployed"
