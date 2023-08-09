@@ -30,6 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2 # Make sure the code is checked out if the HTML file is in the repo
+
+      - name: Read HTML file
+        id: read_html
+        run: |
+          content=$(cat ~/IMS-Corp/templates/email/notify_deployment-staging.html) # Replace this with the path to your HTML file
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=content::$content"
+        shell: bash
+
       - name: Send Notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -38,6 +51,6 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployed"
-          body: "IMS-Corp has been deployed successfully"
+          body: ${{ steps.read_html.outputs.content }}
           to: "bhunia.sanchayan@gmail.com"
           from: ${{ secrets.username }}
