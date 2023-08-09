@@ -21,7 +21,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
           cd ~/IMS-Corp
           git pull origin dev
-          docker compose build --no-cache
+          docker compose build
           docker compose up -d
           exit
           EOF
@@ -44,13 +44,6 @@ jobs:
           echo "::set-output name=content::$content"
 
       - name: Send Notification
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
-          server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          username: ${{ secrets.MAIL_SERVER_UID }}
-          password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: "IMS-Corp Deployed"
-          body: ${{ steps.prepare_email.outputs.content }}
-          from: ${{ secrets.MAIL_SERVER_UID }}
-          to: "bhunia.sanchayan@gmail.com"
+        run: |
+          echo ${{ steps.prepare_email.outputs.content }}
+        
