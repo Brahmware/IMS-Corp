@@ -55,19 +55,6 @@ jobs:
           exit
           EOF
 
-      - name: Send Email Notification
-        uses: dawidd6/action-send-mail@v2
-        with:
-          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
-          server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          username: ${{ secrets.MAIL_SERVER_UID }}
-          password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: "IMS-Corp Deployment on Staging"
-          body: ${{ steps.prepare_email.outputs.content }}
-          from: ${{ secrets.MAIL_SERVER_UID }}
-          to: ${{ secrets.MAIL_SERVER_UID }}
-          content_type: text/html
-
       - name: Send Email
         uses: Brahmware/Send-Notification@main
         with:
