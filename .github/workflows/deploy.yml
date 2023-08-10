@@ -63,9 +63,9 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployment on Staging"
-          body: ${{ steps.prepare_email.outputs.content }}
+          body: ${{ steps.prepare_email.outputs.content }}  # Correct syntax to reference the step output
           content_type: "text/html"
           convert_markdown: true
-          from: ${{ secrets.MAIL_SERVER_UID }}
+          from: "github[bot] <${{ secrets.MAIL_SERVER_UID }}>"
           to: "bhunia.sanchayan@gmail.com"
         
