@@ -43,19 +43,20 @@ jobs:
           content=${content//BRANCH_NAME/$branch_name}
           content=${content//COMMIT_MESSAGE/$commit_message}
           content=${content//FILES_CHANGED/$files_changed}
-          
+
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
           cd ~/IMS-Corp
           mkdir -p emails
           echo "$content" > emails/notify_deployment-staging.html
           exit
           EOF
-          
+
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./email.html
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./mail_list.csv
-          
-          echo "::set-output name=mail_list::$(cat mail_list.csv)"
-          
+          mail_list=$(cat mail_list.csv)
+          echo "::add-mask::$mail_list"
+          echo "::set-output name=mail_list::$mail_list"
+
       - name: Send Email
         uses: dawidd6/action-send-mail@v2
         with:
@@ -69,4 +70,3 @@ jobs:
           from: Github | Brahmware <${{ secrets.MAIL_SERVER_UID }}>
           to: ${{ secrets.LEAD_NAME }} <${{ secrets.LEAD_EMAIL }}>
           bcc: ${{ steps.prepare_email.outputs.mail_list }}
-          
