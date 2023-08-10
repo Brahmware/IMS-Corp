@@ -5,14 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IMS-Corp Deployment Notification</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { margin: 20px; }
-        .header { font-weight: bold; font-size: 20px; }
-        .section { margin: 10px 0; }
-        .summary-table { width: 100%; border-collapse: collapse; }
-        .summary-table th, .summary-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .summary-table tr:nth-child(even) { background-color: #f2f2f2; }
-        .summary-table th { padding-top: 12px; padding-bottom: 12px; background-color: #E18F3C; color: white; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 40px auto;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            font-weight: bold;
+            font-size: 24px;
+            color: #E18F3C;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .summary-table th, .summary-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .summary-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .summary-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: #E18F3C;
+            color: white;
+        }
+        .file-list {
+            font-size: 14px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
@@ -21,10 +66,10 @@
         <div class="section">Deployment Time: DEPLOYMENT_TIME</div>
         <div class="section">Branch Deployed: BRANCH_NAME</div>
         <div class="section">Commit Message: COMMIT_MESSAGE</div>
-        <div class="section">Author Name: AUTHOR_NAME <AUTHOR_EMAIL></div>
+        <div class="section">Author Name: AUTHOR_NAME </div>
         <div class="section">Author Email: AUTHOR_EMAIL</div>
         <div class="section">Files Changed:</div>
-        <pre class="section">FILES_CHANGED</pre>
+        <div class="file-list">FILES_CHANGED</div>
 
         <h2>Summary</h2>
         <table class="summary-table">
