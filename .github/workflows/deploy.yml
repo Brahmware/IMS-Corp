@@ -21,8 +21,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa <<EOF
           cd ~/IMS-Corp
           git pull origin dev
+          docker compose build --no-cache
+          docker compose up -d
           exit
           EOF
+          echo "Deployment on Staging Server Completed"
 
       - name: Prepare Email
         id: prepare_email
@@ -51,11 +54,17 @@ jobs:
           exit
           EOF
 
-          scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./email.html
+          emailPath="email.html"
+          echo "::add-mask::$emailPath"
+          
+          scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./$emailPath
+          echo "::set-output name=emailPath::$emailPath"
+
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./mail_list.csv
           mail_list=$(cat mail_list.csv)
           echo "::add-mask::$mail_list"
           echo "::set-output name=mail_list::$mail_list"
+          echo "Email Prepared"
 
       - name: Send Email
         uses: dawidd6/action-send-mail@v2
@@ -65,7 +74,7 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: IMS Corporate website Deployment on Staging Server | ${{ github.repository }}
-          body: file://email.html
+          body: file://${{ steps.prepare_email.outputs.emailPath }}
           content_type: text/html
           from: Github | Brahmware <${{ secrets.MAIL_SERVER_UID }}>
           to: ${{ secrets.LEAD_NAME }} <${{ secrets.LEAD_EMAIL }}>
