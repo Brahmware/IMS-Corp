@@ -53,8 +53,8 @@ jobs:
           
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./email.html
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./mail_list.csv
-          mail_list=$(cat mail_list.csv)
-          echo "::set_output name=mail_list::$mail_list"
+          
+          echo "::set-output name=mail_list::$(cat mail_list.csv)"
           
       - name: Send Email
         uses: dawidd6/action-send-mail@v2
@@ -68,5 +68,5 @@ jobs:
           content_type: text/html
           from: Github | Brahmware <${{ secrets.MAIL_SERVER_UID }}>
           to: ${{ secrets.LEAD_NAME }} <${{ secrets.LEAD_EMAIL }}>
-          bcc: ${{ steps.prepare_email.outputs.emails }}
+          bcc: ${{ steps.prepare_email.outputs.mail_list }}
           
