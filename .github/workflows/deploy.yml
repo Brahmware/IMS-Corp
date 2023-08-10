@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployment on Staging"
-          body: "./email.html"
+          body: file://email.html
           content_type: "text/html"
           from: "github[bot] <${{ secrets.MAIL_SERVER_UID }}>"
           to: "bhunia.sanchayan@gmail.com"
