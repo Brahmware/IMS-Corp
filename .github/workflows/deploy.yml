@@ -63,7 +63,7 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployment on Staging"
-          body: "the body of the email is ${{ secrets.MAIL_SERVER_UID }}"
+          body: "the body of the email is ${{ steps.prepare_email.outputs.content }}"
           content_type: "text/html"
           convert_markdown: true
           from: "github[bot] <${{ secrets.MAIL_SERVER_UID }}>"
