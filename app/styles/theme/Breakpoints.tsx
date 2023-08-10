@@ -6,7 +6,7 @@ interface Values {
   md: number;
   lg: number;
   xl: number;
-}
+};
 
 export const values: Values = {
   xs: 0,
@@ -25,7 +25,7 @@ export interface Breakpoints {
   only: (key: keyof Values) => string;
   not: (key: keyof Values) => string;
   unit: 'px' | 'em' | 'rem';
-}
+};
 
 export const breakpoints: Breakpoints = {
   values,

@@ -6,7 +6,7 @@ export interface Spaces {
   lg: string;
   xl: string;
   xxl: string;
-}
+};
 
 export const spaces: Spaces = {
   xxs: '0.25rem',

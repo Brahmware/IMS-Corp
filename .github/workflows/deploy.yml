@@ -63,4 +63,4 @@ jobs:
           body: file://email.html
           content_type: "text/html"
           from: "Github | Brahmware <${{ secrets.MAIL_SERVER_UID }}>"
-          to: "bhunia.sanchayan@gmail.com"
+          to: "sanchayan.bhunia@hotmail.com"
