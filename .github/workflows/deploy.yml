@@ -62,5 +62,5 @@ jobs:
           subject: "IMS-Corp Deployment on Staging"
           body: file://email.html
           content_type: "text/html"
-          from: "github[bot] <${{ secrets.MAIL_SERVER_UID }}>"
+          from: "Brahmware | Github <${{ secrets.MAIL_SERVER_UID }}>"
           to: "bhunia.sanchayan@gmail.com"
