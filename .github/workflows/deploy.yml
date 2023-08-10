@@ -56,7 +56,7 @@ jobs:
           EOF
 
       - name: Send Email
-        uses: Brahmware/Send-Notification@main
+        uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
           server_port: ${{ secrets.MAIL_SERVER_PORT }}
