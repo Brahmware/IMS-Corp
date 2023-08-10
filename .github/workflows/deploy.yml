@@ -27,7 +27,7 @@ jobs:
       - name: Prepare Email
         id: prepare_email
         run: |
-          deployment_time="$(date)"
+          deployment_time=$(TZ=Asia/Kolkata date)
           git fetch --unshallow
           last_commit_hash=$(git rev-parse HEAD)
           author_name=$(git log -1 --format='%an')
@@ -59,7 +59,7 @@ jobs:
           server_port: ${{ secrets.MAIL_SERVER_PORT }}
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
-          subject: "IMS-Corp Deployment on Staging"
+          subject: IMS Corporate website Deployment on Staging Server | ${{ github.repository }}
           body: file://email.html
           content_type: "text/html"
           from: "Github | Brahmware <${{ secrets.MAIL_SERVER_UID }}>"
