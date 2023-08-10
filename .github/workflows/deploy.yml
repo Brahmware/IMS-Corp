@@ -63,7 +63,8 @@ jobs:
           username: ${{ secrets.MAIL_SERVER_UID }}
           password: ${{ secrets.MAIL_SERVER_PASS }}
           subject: "IMS-Corp Deployment on Staging"
-          body: "Deployment on Staging has been completed successfully."
+          body: ${{ steps.prepare_email.outputs.content }}
+          content_type: "text/html"
           from: ${{ secrets.MAIL_SERVER_UID }}
           to: "bhunia.sanchayan@gmail.com"
         
