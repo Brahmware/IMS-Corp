@@ -65,6 +65,7 @@ jobs:
           subject: "IMS-Corp Deployment on Staging"
           body: ${{ steps.prepare_email.outputs.content }}
           content_type: "text/html"
+          convert_markdown: true
           from: ${{ secrets.MAIL_SERVER_UID }}
           to: "bhunia.sanchayan@gmail.com"
         
