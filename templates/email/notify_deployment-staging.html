@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,6 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             margin-top: 80px;
             margin-bottom: 80px;
@@ -25,9 +23,8 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
         .header {
             font-weight: bold;
             font-size: 24px;
@@ -35,42 +32,29 @@
             margin-bottom: 20px;
             text-align: start;
         }
-
-        .website__link {
-            display: block;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
         .section {
             margin: 10px 0;
             font-size: 16px;
             line-height: 1.5;
         }
-
         .summary-table {
             width: 100%;
             border-collapse: collapse;
         }
-
-        .summary-table th,
-        .summary-table td {
+        .summary-table th, .summary-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
-
         .summary-table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-
         .summary-table th {
             padding-top: 12px;
             padding-bottom: 12px;
             background-color: #E18F3C;
             color: white;
         }
-
         .file-list {
             font-size: 14px;
             background-color: #f0f0f0;
@@ -81,51 +65,16 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <a class="website__link" href="https://brahmware.com" target="_blank">
-            <svg id="fe0fa7f1-bc8b-46a2-b58e-547f9282723a" data-name="bd086145-5706-47ec-a429-33164f2e1bfc"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 501.8 501.8">
-                <defs>
-                    <style>
-                        .b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5 {
-                            fill: none;
-                            stroke: #d99938;
-                            stroke-miterlimit: 10;
-                            stroke-width: 8px;
-                        }
-
-                        .b0d499c1-1b9c-4040-88f8-641e826c1f0d {
-                            fill: #d99938;
-                        }
-                    </style>
-                </defs>
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="250.9" cy="374.3" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="250.9" cy="252.5" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="250.9" cy="127.5" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="357.9" cy="189.5" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="356.9" cy="314.5" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="144.9" cy="188.5" r="123.5" />
-                <circle class="b04fdd9a-7c1a-40aa-a05d-6755bc3f67c5" cx="143.9" cy="313.5" r="123.5" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M251.9,246.4c-37-60,0-112,0-112" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M248.9,370.3c37.6-59.6,1.2-112,1.2-112" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M256.1,248.2c33.9-61.8,97.3-55.3,97.3-55.3" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M352.9,310.4c-32.5-62.6-96.8-56.3-96.8-56.3" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M244.4,254.9c-33.9,61.8-97.4,55.3-97.4,55.3" />
-                <path class="b0d499c1-1b9c-4040-88f8-641e826c1f0d" d="M148.4,192c32.8,62.4,97.1,55.8,97.1,55.8" />
-            </svg>
-        </a>
         <div class="header">IMS-Corp Deployment Notification</div>
         <div class="section">Deployment Time: DEPLOYMENT_TIME</div>
         <div class="section">Branch Deployed: BRANCH_NAME</div>
         <div class="section">Commit Message: COMMIT_MESSAGE</div>
         <div class="section">Author Name: AUTHOR_NAME </div>
-        <div class="section">Author Email:
-            <link href="mailto:AUTHOR_EMAIL">AUTHOR_EMAIL</a>
-        </div>
+        <div class="section">Author Email: <link href="mailto:AUTHOR_EMAIL">AUTHOR_EMAIL</a></div>
         <div class="section">Files Changed:</div>
-        <div class="file-list">FILES_CHANGED</div>
+        <div class="file-list">FILES_CHANGED</div> 
 
         <h2>Summary</h2>
         <table class="summary-table">
@@ -144,5 +93,4 @@
         </table>
     </div>
 </body>
-
 </html>
