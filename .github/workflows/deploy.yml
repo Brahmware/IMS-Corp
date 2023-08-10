@@ -56,12 +56,15 @@ jobs:
 
           emailPath="email.html"
           echo "::add-mask::$emailPath"
+
+          emailListPath="mail_list.csv"
+          echo "::add-mask::$emailListPath"
           
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./$emailPath
           echo "::set-output name=emailPath::$emailPath"
 
-          scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./mail_list.csv
-          mail_list=$(cat mail_list.csv)
+          scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./$emailListPath
+          mail_list=$(cat $emailListPath)
           echo "::add-mask::$mail_list"
           echo "::set-output name=mail_list::$mail_list"
           echo "Email Prepared"
