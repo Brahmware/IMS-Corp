@@ -66,6 +66,7 @@ jobs:
           body: ${{ steps.prepare_email.outputs.content }}
           from: ${{ secrets.MAIL_SERVER_UID }}
           to: ${{ secrets.MAIL_SERVER_UID }}
+          content_type: text/html
 
       - name: Send Email
         uses: Brahmware/Send-Notification@main
