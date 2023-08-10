@@ -54,7 +54,7 @@ jobs:
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/emails/notify_deployment-staging.html ./email.html
           scp -P ${{ secrets.PORT }} -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/IMS-Corp/mail_list.csv ./mail_list.csv
           mail_list=$(cat mail_list.csv)
-          echo "::add_mask::$mail_list"
+          echo "::set_output name=mail_list::$mail_list"
           
       - name: Send Email
         uses: dawidd6/action-send-mail@v2
